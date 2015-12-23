@@ -98,7 +98,7 @@ public class BayItem{
                     }
 					else 
 					{  // Do we need to set one or neither of HIGH and or low as gray (or blue)
-					   if (lowValue.equals(0) 
+					   if (lowValue.equals(0) )
 					   {
                           if (highValue.equals(0))   
 						  {  // They should both be gray

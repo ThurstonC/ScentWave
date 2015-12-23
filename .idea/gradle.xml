@@ -9,8 +9,8 @@
         <option name="gradleJvm" value="1.7" />
         <option name="modules">
           <set>
-            <option value="/private/var/root/StudioProjects/ScentWave" />
-            <option value="/private/var/root/StudioProjects/ScentWave/app" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
       </GradleProjectSettings>
