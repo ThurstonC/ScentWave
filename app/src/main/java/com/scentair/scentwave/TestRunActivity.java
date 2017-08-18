@@ -275,20 +275,26 @@ public class TestRunActivity extends Activity implements customButtonListener {
         candidateText = cleanText;
 
         // First, check to see if the barcode is a valid scentair barcode
-        if (checkScentAirSerialNumber(candidateText)) {
-            // This is a valid scentair barcode
-            // Save it into the array
-            // Check to see if the mitec field is also entered for this position, then move focus to the next row mitec field
-            // If the mitec field is not entered, keep the focus on this row.
-            testRun.bayItems[position].scentairBarcode=candidateText;
-            nextBay = testRun.setNextBarcodeEditField();
-            // Make sure this field has lost focus because the barcode is good
-            testRun.bayItems[position].isEditScentair=false;
-        } else if (checkMitecSerialNumber(candidateText)) {
+        // UPDATED 8/18/2017 - JJG
+        // Barcode structure has been updated. Now we need to check mitec prefix 'REV' first
+        // Then we need to make sure the prefix isn't 'SWD'
+        // Then we can assume valid scent air barcode number
+
+        // Check to see if the mitec field is also entered for this position, then move focus to the next row mitec field
+        // If the mitec field is not entered, keep the focus on this row.
+        if (checkMitecSerialNumber(candidateText)) {
             // This is a valid Mitec barcode.  Put it where it belongs and keep focus here.
             testRun.bayItems[position].mitecBarcode=candidateText;
             nextBay = testRun.setNextBarcodeEditField();
             testRun.bayItems[position].isEditScentair=true;
+        }
+        else if (checkScentAirSerialNumber(candidateText)) {
+            // This is a valid scentair barcode
+            // Save it into the array
+            testRun.bayItems[position].scentairBarcode=candidateText;
+            nextBay = testRun.setNextBarcodeEditField();
+            // Make sure this field has lost focus because the barcode is good
+            testRun.bayItems[position].isEditScentair=false;
         } else {
             // This is not a valid barcode for either type.  Keep focus here
             testRun.bayItems[position].isEditScentair=true;
@@ -316,9 +322,9 @@ public class TestRunActivity extends Activity implements customButtonListener {
         if (checkMitecSerialNumber(candidateText)) {
             // This is a valid mitec barcode
             // Save it into the array
+            testRun.bayItems[position].mitecBarcode=candidateText;
             // Check to see if the scentair field is also entered for this position, if not, move focus to that
             // if there is a scentair code already entered, move to next active bay mitec field.
-            testRun.bayItems[position].mitecBarcode=candidateText;
             nextBay = testRun.setNextBarcodeEditField();
             // Make sure this field loses focus since we have a good entry
             testRun.bayItems[position].isEditMitec=false;
@@ -339,11 +345,14 @@ public class TestRunActivity extends Activity implements customButtonListener {
     }
     private boolean checkScentAirSerialNumber(String candidateText) {
         boolean returnValue = false;
-        String scentairCheckString = resources.getString(R.string.SCENTAIR_BARCODE_CHECK);
-        // First check is to make sure the string ends with ".00"
-        if (candidateText.endsWith(scentairCheckString)) {
+        String scentairCheckString = resources.getString(R.string.SCENTWAVEDEVICE_PREFIX);
+        // UPDATED 8/18/2017 - JJG
+        // They changed the barcode numbering scheme. Scentair barcodes no longer end in .00
+        // Now, we need to check to make sure that the prefix for the text isn't 'SWD'
+        // If not 'SWD', then assume a valid barcode number
+        if (!candidateText.startsWith(scentairCheckString)) {
             // If the string is terminated properly, check that the number of characters is '13'
-            if (candidateText.length()>=12) {
+            if (candidateText.length()>=9) {
                 // Barcode ends properly with the correct length.  Looks good.
                 returnValue=true;
             }  // Else keep focus here until we get a good value

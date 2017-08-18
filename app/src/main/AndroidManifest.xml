@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.scentair.scentwave"
-    android:versionCode="2"
+    android:versionCode="3"
     android:versionName="JTC1.0">
     // version numbers above are overridden by app/build.gradle
     <uses-permission android:name="android.permission.INTERNET" />

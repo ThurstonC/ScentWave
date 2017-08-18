@@ -27,7 +27,7 @@
         <item>58</item>
         <item>59</item>
     </integer-array>
-    <string name="SCENTAIR_BARCODE_CHECK">.00</string>
+    <string name="SCENTWAVEDEVICE_PREFIX">SWD</string>
     <string name="MITEC_BARCODE_CHECK">REV</string>
     <integer name="FAN_MODE_WAIT_TIME">2</integer>
     <integer name="LED_BLINK_TIMER">500</integer>
